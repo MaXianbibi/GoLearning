@@ -54,3 +54,28 @@ nothing = code
 % 3.3
     
     x : Dependency injection
+
+            ! on avait plusieurs choix : 
+                - variable globale
+
+                - singleton
+
+                - ou creer une struct qui contient les methodes
+                    
+                    ! beaucoup plus propre et plus flexible pour la suite
+                
+            - go
+
+                type application struct {
+                logger *slog.Logger
+                }
+
+                app := &application{
+                logger: logger,
+                }
+
+                func (app *application) home(w http.ResponseWriter, r *http.Request) { ... }
+                mux.HandleFunc("/", app.home)
+% 3.4
+
+    x : Centralized error handling
