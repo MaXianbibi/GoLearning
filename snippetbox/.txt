@@ -1,0 +1,22 @@
+% = chapter
+x = sujet
+- = sous-sujet
+? = question
+! = note
+
+nothing = code
+
+% 3.1 : 
+
+    x argument in go : 
+
+            - shell : 
+                -addr="${DEFAULT_ADDR}"
+
+            - go : 
+                addr := flag.String("addr", ":4000", "HTTP network address")
+                flag.Parse()
+            
+            ! faire parse apres flag.string, pour que les arguments soient pris en compte
+            ! go run {...} -help pour voir les arguments et leur description
+        
