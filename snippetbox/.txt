@@ -20,10 +20,37 @@ nothing = code
             ! faire parse apres flag.string, pour que les arguments soient pris en compte
             ! go run {...} -help pour voir les arguments et leur description
             ! on peut aussi utiliser flag.Int, flag.Bool, etc.
-            
+
             ! et on peut aussi stocker dans des variables qui sont deja init
                 - go : 
                     flag.StringVar(&cfg.addr, "addr", ":4000", "HTTP network address")
 
+% 3.2
+
+    x : Structured logging
+
+        - go 
+            logger := slog.New(slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{...}))
+
+            ! creer un logger avec un handler qui ecrit dans la console
+
+    x : ... operator :
+
+        ! a deux fonctionalites
+
+            - pour les slices : 
+                - go : 
+                    fmt.Println(slice...)
+                ! sa deballe ton array, et passe les elements un par un a la fonction
+
+            - pour les argument variadiques : 
+                - go : 
+                    func(args ...string) {
+                        fmt.Println(args...)
+                    }
+                ! une fonc peut prendre un nombre variable d'arguments
+
     
-        
+% 3.3
+    
+    x : Dependency injection

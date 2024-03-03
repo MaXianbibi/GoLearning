@@ -1,34 +1,40 @@
 package main
 
 import (
-    "log"
-    "net/http"
     "flag"
+    "log/slog"
+    "net/http"
+    "os"
 )
 
+type application struct {
+    logger *slog.Logger
+}
+
 func main() {
-    mux := http.NewServeMux()
-
-
-
     addr := flag.String("addr", ":4000", "HTTP network address")
     flag.Parse()
 
-    /// tous les fhichiers dans le dossier static sont servis
+    logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
+
+    app := &application{
+        logger: logger,
+    }
+
+    mux := http.NewServeMux()
+
     fileServer := http.FileServer(http.Dir("./ui/static/"))
     mux.Handle("/static/", http.StripPrefix("/static", fileServer))
+    
+    // Swap the route declarations to use the application struct's methods as the
+    // handler functions.
+    mux.HandleFunc("/", app.home)
+    mux.HandleFunc("/snippet/view", app.snippetView)
+    mux.HandleFunc("/snippet/create", app.snippetCreate)
 
-
-
-
-
-
-    mux.HandleFunc("/", home)
-    mux.HandleFunc("/snippet/view", snippetView)
-    mux.HandleFunc("/snippet/create", snippetCreate)
-
-    log.Print("starting server on :", *addr)
+    logger.Info("starting server", "addr", *addr)
     
     err := http.ListenAndServe(*addr, mux)
-    log.Fatal(err)
+    logger.Error(err.Error())
+    os.Exit(1)
 }
