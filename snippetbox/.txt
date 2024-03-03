@@ -19,4 +19,11 @@ nothing = code
             
             ! faire parse apres flag.string, pour que les arguments soient pris en compte
             ! go run {...} -help pour voir les arguments et leur description
+            ! on peut aussi utiliser flag.Int, flag.Bool, etc.
+            
+            ! et on peut aussi stocker dans des variables qui sont deja init
+                - go : 
+                    flag.StringVar(&cfg.addr, "addr", ":4000", "HTTP network address")
+
+    
         
